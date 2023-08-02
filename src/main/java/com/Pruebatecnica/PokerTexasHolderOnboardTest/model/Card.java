@@ -37,4 +37,12 @@ public class Card {
         String numeroString = String.valueOf(par);
     return numeroString;
     }
+
+    private Integer menor(Integer num1, Integer num2){
+        if(num1 < num2)
+            return num1;
+        if(num1>num2)
+            return num2;
+        return 0;
+    }
 }
