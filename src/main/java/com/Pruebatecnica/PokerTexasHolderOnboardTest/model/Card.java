@@ -1,11 +1,8 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -90,39 +87,6 @@ public class Card {
         List<String> manohordenada2=ordenarMano(hand2,haden2CartasPar);
         logger.log(Level.INFO, "numero: {0}", manohordenada2);
 
-       /* for (int i = 0; i < haden1CartasPar.size(); i+=2) {
-            String numero = haden1CartasPar.get(i);
-            String palo = haden1CartasPar.get(i+1);
-            manohordenada.remove(numero+palo);
-        }
-
-
-
-
-        Integer numero1=0;
-        Integer numero2=0;
-        for (int i = 0; i < manohordenada.size()-1; i++) {
-            for (int j = 0; j < manohordenada.size()-1; j++) {
-
-                String elemento1= manohordenada.get(j);
-                logger.log(Level.INFO, "elemento: {0}", elemento1);
-                numero1= (Integer) cartasvalor.get(String.valueOf(elemento1.charAt(0)));
-                logger.log(Level.INFO, "numero: {0}", numero1);
-
-                String elemento2= manohordenada.get(j+1);
-                logger.log(Level.INFO, "elemento: {0}", elemento2);
-                numero2= (Integer) cartasvalor.get(String.valueOf(elemento2.charAt(0)));
-                logger.log(Level.INFO, "numero: {0}", numero2);
-
-                if (numero1<numero2){
-                    String aux = elemento1;
-                    manohordenada.set(j,elemento2);
-                    manohordenada.set(j+1,elemento1);
-                }
-
-            }
-
-        }*/
 
 
         if ((manoPar1 == true) && (manoPar2 == true)){
@@ -182,7 +146,7 @@ public class Card {
         }
 
 
-        //logger.log(Level.INFO, "el valor manohordenada: {0}", manohordenada);
+
         String numeroString = String.valueOf(par1);
     return manoGanadora;
     }
@@ -251,20 +215,6 @@ public class Card {
 
     }
 
-    private String compararMano(List<String> mano1, List<String> mano2){
 
 
-
-
-
-        return "hola";
-    }
-
-    private Integer menor(Integer num1, Integer num2){
-        if(num1 < num2)
-            return num1;
-        if(num1>num2)
-            return num2;
-        return 0;
-    }
 }
