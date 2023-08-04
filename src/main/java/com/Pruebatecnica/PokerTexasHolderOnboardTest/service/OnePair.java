@@ -1,5 +1,4 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
-
 import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

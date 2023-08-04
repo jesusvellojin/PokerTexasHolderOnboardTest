@@ -1,10 +1,8 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
 
 import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
-import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TwoPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,7 +53,7 @@ public class TreeCard {
             }
         }
 
-        tripleCarOrdenada= ordenar(tripleCar);
+        //tripleCarOrdenada= ordenar(tripleCar);
 
         if(con==0){
             hayParDos=false;

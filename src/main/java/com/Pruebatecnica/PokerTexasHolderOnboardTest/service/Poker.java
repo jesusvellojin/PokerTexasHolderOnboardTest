@@ -1,8 +1,5 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
-
 import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
-import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TreeCard;
-import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TwoPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +55,7 @@ public class Poker {
             }
         }
 
-        fourCardOrdenada= ordenar(fourCar);
+        //fourCardOrdenada= ordenar(fourCar);
 
         if(con==0){
             hayParDos=false;
