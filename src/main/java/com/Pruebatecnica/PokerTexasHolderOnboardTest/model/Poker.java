@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class Poker {
 
-    Logger logger = Logger.getLogger(Card.class.getName());
+
     @Autowired
-    Card card;
-    @Autowired
-    ParDos parDos;
+    TwoPair twoPair;
     @Autowired
     TreeCard treeCard;
 
@@ -50,8 +46,7 @@ public class Poker {
 
         for (String i:mapCarta.keySet()) {
             banValor=mapCarta.get(i);
-            logger.log(Level.INFO, "elemento: {0}", i);
-            logger.log(Level.INFO, "elemento: {0}", banValor);
+
 
             if (banValor==4){
                 con++;
@@ -89,8 +84,7 @@ public class Poker {
 
         for (String i:mapCarta2.keySet()) {
             banValor2=mapCarta2.get(i);
-            logger.log(Level.INFO, "elemento: {0}", i);
-            logger.log(Level.INFO, "elemento: {0}", banValor2);
+
 
             if (banValor2==4){
                 con2++;

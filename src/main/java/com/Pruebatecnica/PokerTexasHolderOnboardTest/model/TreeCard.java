@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 @Service
 public class TreeCard {
 
-    Logger logger = Logger.getLogger(Card.class.getName());
+
     @Autowired
-    Card card;
-    @Autowired
-    ParDos parDos;
+    TwoPair twoPair;
 
     public ManoGanadora treeCar(String hand1, String hand2 ){
         ManoGanadora manoGanadora = new ManoGanadora();
@@ -47,8 +44,7 @@ public class TreeCard {
 
         for (String i:mapCarta.keySet()) {
             banValor=mapCarta.get(i);
-            logger.log(Level.INFO, "elemento: {0}", i);
-            logger.log(Level.INFO, "elemento: {0}", banValor);
+
 
             if (banValor==3){
                 con++;
@@ -86,8 +82,7 @@ public class TreeCard {
 
         for (String i:mapCarta2.keySet()) {
             banValor2=mapCarta2.get(i);
-            logger.log(Level.INFO, "elemento: {0}", i);
-            logger.log(Level.INFO, "elemento: {0}", banValor2);
+
 
             if (banValor2==3){
                 con2++;
@@ -163,7 +158,7 @@ public class TreeCard {
             return manoGanadora;
         }
         if (hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.FALSE)){
-            return parDos.doblePar(hand1,hand2);
+            return twoPair.doblePar(hand1,hand2);
         }
 
 

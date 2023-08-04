@@ -4,17 +4,14 @@ import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 @CrossOrigin
 @RestController
 public class HandController {
+
     @Autowired
-    private Card card;
-    @Autowired
-    private ParDos parDos;
+    private TwoPair twoPair;
     @Autowired
     private TreeCard treeCard;
     @Autowired
