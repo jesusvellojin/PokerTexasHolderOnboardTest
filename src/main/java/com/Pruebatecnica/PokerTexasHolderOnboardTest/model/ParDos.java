@@ -228,7 +228,7 @@ public class ParDos {
         cartasValor.put("7",7);
         cartasValor.put("8",8);
         cartasValor.put("9",9);
-        cartasValor.put("1",10);
+        cartasValor.put("10",10);
         cartasValor.put("J",11);
         cartasValor.put("Q",12);
         cartasValor.put("K",13);
@@ -248,10 +248,11 @@ public class ParDos {
         valor.add("7");
         valor.add("8");
         valor.add("9");
-        valor.add("1");
+        valor.add("10");
         valor.add("J");
         valor.add("Q");
         valor.add("K");
+        valor.add("A");
         for (int i = 0; i < valor.size() ; i++) {
             for (int j = 0; j < lista.size(); j++) {
                 String ban1 = lista.get(j);
