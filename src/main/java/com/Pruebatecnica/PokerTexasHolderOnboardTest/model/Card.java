@@ -159,9 +159,9 @@ public class Card {
             Integer numero2=0;
             for (int i = 0; i < ordenada1.size(); i++) {
 
-                String ban1 = ordenada1.get(1);
+                String ban1 = ordenada1.get(0);
                 String valorCarta1 = ban1.substring(0, ban1.length() - 1);
-                String ban2 = ordenada2.get(1);
+                String ban2 = ordenada2.get(0);
                 String valorCarta2 = ban2.substring(0, ban2.length() - 1);
 
 

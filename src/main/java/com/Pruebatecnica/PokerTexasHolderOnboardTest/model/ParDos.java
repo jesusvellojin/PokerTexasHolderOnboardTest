@@ -196,7 +196,7 @@ public class ParDos {
             manoGanadora.setWinnerHand(hand1);
             manoGanadora.setWinnerHandType("TwoPair");
 
-            manoGanadora.setCompositionWinnerHand(cartasParDos);
+            manoGanadora.setCompositionWinnerHand(cartasParDos2);
             return manoGanadora;
         }
         if ((hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.FALSE))){

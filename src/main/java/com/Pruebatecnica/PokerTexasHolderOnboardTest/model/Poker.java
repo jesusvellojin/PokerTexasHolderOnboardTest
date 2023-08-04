@@ -9,17 +9,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 @Service
-public class TreeCard {
+public class Poker {
 
     Logger logger = Logger.getLogger(Card.class.getName());
     @Autowired
     Card card;
     @Autowired
     ParDos parDos;
+    @Autowired
+    TreeCard treeCard;
 
-    public ManoGanadora treeCar(String hand1, String hand2 ){
+    public ManoGanadora poker(String hand1, String hand2){
         ManoGanadora manoGanadora = new ManoGanadora();
+
         String[] cartas = hand1.split(" ");
         String[] cartas2 = hand2.split(" ");
         List<String> arraylista = Arrays.asList(cartas);
@@ -33,15 +37,14 @@ public class TreeCard {
         Boolean hayParDos=false;
         Boolean hayParDos2=false;
 
-        List<String> tripleCar= new ArrayList<>();
-        List<String> tripleCar2= new ArrayList<>();
-        List<String> tripleCarOrdenada= new ArrayList<>();
-        List<String> tripleCarOrdenada2= new ArrayList<>();
-        List<String> carTripleSecons= new ArrayList<>();
-        List<String> carTripleSecons2= new ArrayList<>();
+        List<String> fourCar= new ArrayList<>();
+        List<String> fourCar2= new ArrayList<>();
+        List<String> fourCardOrdenada= new ArrayList<>();
+        List<String> fourCardOrdenada2= new ArrayList<>();
+        List<String> carFourSecons= new ArrayList<>();
+        List<String> carFourSecons2= new ArrayList<>();
 
-
-   ////////////////////////////////////////mano 1
+        ////////////////////////////////////////mano 1
         HashMap<String, Integer> mapCarta = elementosPar(lista);
         int banValor=0;
 
@@ -50,26 +53,26 @@ public class TreeCard {
             logger.log(Level.INFO, "elemento: {0}", i);
             logger.log(Level.INFO, "elemento: {0}", banValor);
 
-            if (banValor==3){
+            if (banValor==4){
                 con++;
-                tripleCar.add(i);
+                fourCar.add(i);
 
             }
         }
 
-        tripleCarOrdenada= ordenar(tripleCar);
+        fourCardOrdenada= ordenar(fourCar);
 
         if(con==0){
             hayParDos=false;
         }
         if (con==1){
             hayParDos=true;
-            for (int i = 0; i < tripleCar.size() ; i++) {
+            for (int i = 0; i < fourCar.size() ; i++) {
                 for (int j = 0; j < lista.size() ; j++) {
                     String ban1 = lista.get(j);
                     String valorCarta1 = ban1.substring(0, ban1.length() - 1);
-                    if (tripleCar.get(i).equalsIgnoreCase(valorCarta1)){
-                        carTripleSecons.add(ban1);
+                    if (fourCar.get(i).equalsIgnoreCase(valorCarta1)){
+                        carFourSecons.add(ban1);
                     }
                 }
             }
@@ -89,26 +92,26 @@ public class TreeCard {
             logger.log(Level.INFO, "elemento: {0}", i);
             logger.log(Level.INFO, "elemento: {0}", banValor2);
 
-            if (banValor2==3){
+            if (banValor2==4){
                 con2++;
-                tripleCar2.add(i);
+                fourCar2.add(i);
 
             }
         }
 
-        tripleCarOrdenada2= ordenar(tripleCar2);
+        fourCardOrdenada2= ordenar(fourCar2);
 
         if(con2==0){
             hayParDos2=false;
         }
         if (con2==1){
             hayParDos2=true;
-            for (int i = 0; i < tripleCar2.size() ; i++) {
+            for (int i = 0; i < fourCar2.size() ; i++) {
                 for (int j = 0; j < lista2.size() ; j++) {
                     String ban2 = lista2.get(j);
                     String valorCarta2 = ban2.substring(0, ban2.length() - 1);
-                    if (tripleCar2.get(i).equalsIgnoreCase(valorCarta2)){
-                        carTripleSecons2.add(ban2);
+                    if (fourCar2.get(i).equalsIgnoreCase(valorCarta2)){
+                        carFourSecons2.add(ban2);
                     }
                 }
             }
@@ -124,9 +127,9 @@ public class TreeCard {
             Integer numero1=0;
             Integer numero2=0;
 
-            String ban1 = carTripleSecons.get(0);
+            String ban1 = carFourSecons.get(0);
             String valorCarta1 = ban1.substring(0, ban1.length() - 1);
-            String ban2 = carTripleSecons2.get(0);
+            String ban2 = carFourSecons2.get(0);
             String valorCarta2 = ban2.substring(0, ban2.length() - 1);
 
             numero1= (Integer) cartasvalor.get(valorCarta1);
@@ -134,15 +137,15 @@ public class TreeCard {
 
             if (numero1>numero2){
                 manoGanadora.setWinnerHand(hand1);
-                manoGanadora.setWinnerHandType("ThreeOfAKind");
-                manoGanadora.setCompositionWinnerHand(carTripleSecons);
+                manoGanadora.setWinnerHandType("FourOfAKind");
+                manoGanadora.setCompositionWinnerHand(carFourSecons);
                 return manoGanadora;
 
             }
             if (numero2>numero1){
                 manoGanadora.setWinnerHand(hand2);
-                manoGanadora.setWinnerHandType("ThreeOfAKind");
-                manoGanadora.setCompositionWinnerHand(carTripleSecons2);
+                manoGanadora.setWinnerHandType("FourOfAKind");
+                manoGanadora.setCompositionWinnerHand(carFourSecons2);
                 return manoGanadora;
             }
 
@@ -151,27 +154,29 @@ public class TreeCard {
 
         if (hayParDos.equals(Boolean.TRUE) && hayParDos2.equals(Boolean.FALSE)){
             manoGanadora.setWinnerHand(hand1);
-            manoGanadora.setWinnerHandType("ThreeOfAKind");
-            manoGanadora.setCompositionWinnerHand(carTripleSecons);
+            manoGanadora.setWinnerHandType("FourOfAKind");
+            manoGanadora.setCompositionWinnerHand(carFourSecons);
             return manoGanadora;
         }
 
         if (hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.TRUE)){
             manoGanadora.setWinnerHand(hand2);
-            manoGanadora.setWinnerHandType("ThreeOfAKind");
-            manoGanadora.setCompositionWinnerHand(carTripleSecons2);
+            manoGanadora.setWinnerHandType("FourOfAKind");
+            manoGanadora.setCompositionWinnerHand(carFourSecons2);
             return manoGanadora;
         }
         if (hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.FALSE)){
-            return parDos.doblePar(hand1,hand2);
+            return treeCard.treeCar(hand1,hand2);
         }
+
+
+
 
 
 
 
         return manoGanadora;
     }
-
 
 
     private HashMap<String, Integer> elementosPar(List<String> lista){
@@ -237,6 +242,7 @@ public class TreeCard {
         }
         return desordenada;
     }
+
     private HashMap<String, Integer> cartasValor(){
         HashMap<String, Integer> cartasValor = new HashMap<>();
         cartasValor.put("2",2);
@@ -254,8 +260,6 @@ public class TreeCard {
         cartasValor.put("A",14);
         return cartasValor;
     }
-
-
 
 
 

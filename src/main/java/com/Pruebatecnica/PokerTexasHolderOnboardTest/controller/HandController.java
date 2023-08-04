@@ -17,6 +17,8 @@ public class HandController {
     private ParDos parDos;
     @Autowired
     private TreeCard treeCard;
+    @Autowired
+    private Poker poker;
     Logger logger = Logger.getLogger(HandController.class.getName());
 @GetMapping("//poker/validation")
     public String hacerAlgo(){
@@ -29,7 +31,9 @@ public class HandController {
         logger.info("INGRESA AL METODO findAllRoutes");
         //ManoGanadora result = card.Par(hand.getHand1(),hand.getHand2());
         //ManoGanadora result1 =parDos.doblePar(hand.getHand1(),hand.getHand2());
-            ManoGanadora result1=treeCard.treeCar(hand.getHand1(),hand.getHand2());
+        //ManoGanadora result1=treeCard.treeCar(hand.getHand1(),hand.getHand2());
+        ManoGanadora result1=poker.poker(hand.getHand1(),hand.getHand2());
+
         return result1;
 
     }
