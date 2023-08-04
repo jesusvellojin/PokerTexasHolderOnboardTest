@@ -1,5 +1,6 @@
-package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
+package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
 
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Service
 public class HighCard {
-    public  ManoGanadora highCard(String hand1, String hand2){
+    public ManoGanadora highCard(String hand1, String hand2){
 
         ManoGanadora manoGanadora = new ManoGanadora();
 
@@ -19,31 +20,20 @@ public class HighCard {
         String[] cartas2 = hand2.split(" ");
         List<String> arraylista = Arrays.asList(cartas);
         List<String> arraylista2 = Arrays.asList(cartas2);
-
-
-        List<String> haden1CartasPar = new ArrayList<>();
-        List<String> haden1CartasPar2 = new ArrayList<>();
-        List<String> haden2CartasPar = new ArrayList<>();
-        List<String> haden2CartasPar2 = new ArrayList<>();
         List<String> array = new ArrayList<>();
         List<String> ordenada1 = new ArrayList<>();
         List<String> ordenada2 = new ArrayList<>();
-
-
-
         ordenada1=ordenar(arraylista);
         ordenada2=ordenar(arraylista2);
-
         Integer numero1=0;
         Integer numero2=0;
+
         for (int i = 0; i < ordenada1.size(); i++) {
 
             String ban1 = ordenada1.get(0);
             String valorCarta1 = ban1.substring(0, ban1.length() - 1);
             String ban2 = ordenada2.get(0);
             String valorCarta2 = ban2.substring(0, ban2.length() - 1);
-
-
             numero1= (Integer) cartasvalor.get(valorCarta1);
             numero2= (Integer) cartasvalor.get(valorCarta2);
 
@@ -61,13 +51,7 @@ public class HighCard {
                 manoGanadora.setCompositionWinnerHand(array);
                 return manoGanadora;
             }
-
         }
-
-
-
-
-
 
         return manoGanadora;
     }
@@ -83,8 +67,6 @@ public class HighCard {
                 String valorCarta1 = ban1.substring(0, ban1.length() - 1);
                 String ban2 = desordenada.get(j+1);
                 String valorCarta2 = ban2.substring(0, ban2.length() - 1);
-
-
                 numero1= (Integer) cartasvalor.get(valorCarta1);
                 numero2= (Integer) cartasvalor.get(valorCarta2);
                 if (numero1<numero2){
@@ -116,9 +98,6 @@ public class HighCard {
         cartasValor.put("A",14);
         return cartasValor;
     }
-
-
-
 
 }
 

@@ -1,18 +1,22 @@
-package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
+package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
 
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
-public class TwoPair {
+public class OnePair {
 
 
     @Autowired
-    OnePair onePair;
+    HighCard highCard;
 
-    public ManoGanadora doblePar(String hand1, String hand2 ){
+    public ManoGanadora onePair(String hand1, String hand2 ){
         ManoGanadora manoGanadora = new ManoGanadora();
         String[] cartas = hand1.split(" ");
         String[] cartas2 = hand2.split(" ");
@@ -36,8 +40,7 @@ public class TwoPair {
         List<String> desenpate1= new ArrayList<>();
         List<String> desenpate2= new ArrayList<>();
 
-
-////////////////////////////////////////////////////////////mano1
+        ////////////////////////////////////////////////////////////mano1
 
         HashMap<String, Integer> mapCarta = elementosPar(lista);
         int banValor=0;
@@ -52,15 +55,13 @@ public class TwoPair {
             }
         }
 
-
-
-        parDosOrdenada= ordenar(parDos);
+      //  parDosOrdenada= ordenar(parDos);
 
         //Hay dos pares
-        if(con==1){
+        if(con==0){
             hayParDos=false;
         }
-        if (con==2){
+        if (con==1){
             hayParDos=true;
             for (int i = 0; i < parDos.size() ; i++) {
                 for (int j = 0; j < lista.size() ; j++) {
@@ -90,15 +91,15 @@ public class TwoPair {
             }
         }
 
-        parDosOrdenada2= ordenar(parDos2);
+        //parDosOrdenada2= ordenar(parDos2);
 
 
-        if(con2==1){
+        if(con2==0){
             hayParDos2=false;
         }
 
         //Hay dos pares
-        if (con2==2){
+        if (con2==1){
             hayParDos2=true;
             for (int i = 0; i < parDos2.size() ; i++) {
                 for (int j = 0; j < lista2.size() ; j++) {
@@ -131,7 +132,7 @@ public class TwoPair {
 
                 if (numero1>numero2){
                     manoGanadora.setWinnerHand(hand1);
-                    manoGanadora.setWinnerHandType("TwoPair");
+                    manoGanadora.setWinnerHandType("OnePair");
                     array.add(cartasParDos.get(i));
                     array.add(cartasParDos.get(i+1));
                     manoGanadora.setCompositionWinnerHand(array);
@@ -140,97 +141,92 @@ public class TwoPair {
                 }
                 if (numero2>numero1){
                     manoGanadora.setWinnerHand(hand2);
-                    manoGanadora.setWinnerHandType("TwoPair");
+                    manoGanadora.setWinnerHandType("OnePair");
                     array.add(cartasParDos2.get(i));
                     array.add(cartasParDos2.get(i+1));
                     manoGanadora.setCompositionWinnerHand(array);
                     return manoGanadora;
                 }
-                if ((numero1==numero2) && bander==2){
+                if ((numero1==numero2)){
                     desenpate1=desempate(cartasParDos,lista);
                     desenpate2=desempate(cartasParDos2,lista2);
+                    parDosOrdenada= ordenar(desenpate1);
+                    parDosOrdenada2= ordenar(desenpate2);
 
-                    String ban12 = desenpate1.get(0);
-                    String valorCarta12 = ban12.substring(0, ban12.length() - 1);
-                    String ban22 = desenpate2.get(0);
-                    String valorCarta22 = ban22.substring(0, ban22.length() - 1);
+                    for (int j = 0; j < parDosOrdenada.size(); j++) {
+
+                        String ban12 = parDosOrdenada.get(j);
+                        String valorCarta12 = ban12.substring(0, ban12.length() - 1);
+                        String ban22 = parDosOrdenada2.get(j);
+                        String valorCarta22 = ban22.substring(0, ban22.length() - 1);
 
 
-                    numero1= (Integer) cartasvalor.get(valorCarta12);
-                    numero2= (Integer) cartasvalor.get(valorCarta22);
-                    if (numero1>numero2){
-                        manoGanadora.setWinnerHand(hand1);
-                        manoGanadora.setWinnerHandType("TwoPair");
+                        numero1= (Integer) cartasvalor.get(valorCarta12);
+                        numero2= (Integer) cartasvalor.get(valorCarta22);
 
-                        manoGanadora.setCompositionWinnerHand(desenpate1);
-                        return manoGanadora;
+
+
+                        if (numero1>numero2){
+                            manoGanadora.setWinnerHand(hand1);
+                            manoGanadora.setWinnerHandType("OnePair");
+                            array.add(ban12);
+                            manoGanadora.setCompositionWinnerHand(array);
+                            return manoGanadora;
+
+                        }
+                        if (numero2>numero1){
+                            manoGanadora.setWinnerHand(hand2);
+                            manoGanadora.setWinnerHandType("OnePair");
+                            array.add(ban22);
+                            manoGanadora.setCompositionWinnerHand(array);
+                            return manoGanadora;
+
+                        }
+
 
                     }
-                    if (numero2>numero1){
-                        manoGanadora.setWinnerHand(hand2);
-                        manoGanadora.setWinnerHandType("TwoPair");
 
-                        manoGanadora.setCompositionWinnerHand(desenpate2);
-                        return manoGanadora;
-
-                    }
 
                 }
-                bander++;
+
             }
 
 
         }
         if ((hayParDos.equals(Boolean.TRUE) && hayParDos2.equals(Boolean.FALSE))){
             manoGanadora.setWinnerHand(hand1);
-            manoGanadora.setWinnerHandType("TwoPair");
+            manoGanadora.setWinnerHandType("OnePair");
 
             manoGanadora.setCompositionWinnerHand(cartasParDos);
             return manoGanadora;
         }
         if ((hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.TRUE))){
             manoGanadora.setWinnerHand(hand1);
-            manoGanadora.setWinnerHandType("TwoPair");
+            manoGanadora.setWinnerHandType("OnePair");
 
             manoGanadora.setCompositionWinnerHand(cartasParDos2);
             return manoGanadora;
         }
         if ((hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.FALSE))){
 
-            return onePair.onePair(hand1,hand2);
+            return highCard.highCard(hand1, hand2);
         }
 
 
 
+
+
+
+
+
+
+
+
         return manoGanadora;
+
     }
 
 
-
-
-
-
-
-
-
-
-    private HashMap<String, Integer> cartasValor(){
-        HashMap<String, Integer> cartasValor = new HashMap<>();
-        cartasValor.put("2",2);
-        cartasValor.put("3",3);
-        cartasValor.put("4",4);
-        cartasValor.put("5",5);
-        cartasValor.put("6",6);
-        cartasValor.put("7",7);
-        cartasValor.put("8",8);
-        cartasValor.put("9",9);
-        cartasValor.put("10",10);
-        cartasValor.put("J",11);
-        cartasValor.put("Q",12);
-        cartasValor.put("K",13);
-        cartasValor.put("A",14);
-        return cartasValor;
-    }
 
     private HashMap<String, Integer> elementosPar(List<String> lista){
         int par1=1;
@@ -276,25 +272,19 @@ public class TwoPair {
 
     }
 
-    public List<String> desempate(List<String> manoPar,List<String> manoCompleta){
-
-        for (int i = 0; i < manoPar.size(); i++) {
-            String prueba=manoPar.get(i);
-            manoCompleta.remove(prueba);
-
-
-        }
-        return manoCompleta;
-    }
-
     public List<String> ordenar(List<String> desordenada){
         HashMap cartasvalor = cartasValor();
         Integer numero1=0;
         Integer numero2=0;
         for (int i = 0; i < desordenada.size()-1; i++) {
             for (int j = 0; j <desordenada.size()-1; j++) {
-                numero1= (Integer) cartasvalor.get(desordenada.get(j));
-                numero2= (Integer) cartasvalor.get(desordenada.get(j+1));
+
+                String ban1 = desordenada.get(j);
+                String valorCarta1 = ban1.substring(0, ban1.length() - 1);
+                String ban2 = desordenada.get(j+1);
+                String valorCarta2 = ban2.substring(0, ban2.length() - 1);
+                numero1= (Integer) cartasvalor.get(valorCarta1);
+                numero2= (Integer) cartasvalor.get(valorCarta2);
                 if (numero1<numero2){
                     String aux = desordenada.get(j);
                     desordenada.set(j,desordenada.get(j+1));
@@ -308,11 +298,32 @@ public class TwoPair {
     }
 
 
+    private HashMap<String, Integer> cartasValor(){
+        HashMap<String, Integer> cartasValor = new HashMap<>();
+        cartasValor.put("2",2);
+        cartasValor.put("3",3);
+        cartasValor.put("4",4);
+        cartasValor.put("5",5);
+        cartasValor.put("6",6);
+        cartasValor.put("7",7);
+        cartasValor.put("8",8);
+        cartasValor.put("9",9);
+        cartasValor.put("10",10);
+        cartasValor.put("J",11);
+        cartasValor.put("Q",12);
+        cartasValor.put("K",13);
+        cartasValor.put("A",14);
+        return cartasValor;
+    }
+
+    public List<String> desempate(List<String> manoPar,List<String> manoCompleta){
+
+        for (int i = 0; i < manoPar.size(); i++) {
+            String prueba=manoPar.get(i);
+            manoCompleta.remove(prueba);
 
 
-
-
-
-
-
+        }
+        return manoCompleta;
+    }
 }

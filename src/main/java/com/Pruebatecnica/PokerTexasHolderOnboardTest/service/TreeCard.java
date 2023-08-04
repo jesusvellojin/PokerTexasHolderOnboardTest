@@ -1,5 +1,7 @@
-package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
+package com.Pruebatecnica.PokerTexasHolderOnboardTest.service;
 
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.ManoGanadora;
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TwoPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

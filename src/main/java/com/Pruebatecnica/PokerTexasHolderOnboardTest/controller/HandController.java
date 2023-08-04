@@ -1,6 +1,9 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.controller;
 
 import com.Pruebatecnica.PokerTexasHolderOnboardTest.model.*;
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.Poker;
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TreeCard;
+import com.Pruebatecnica.PokerTexasHolderOnboardTest.service.TwoPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
