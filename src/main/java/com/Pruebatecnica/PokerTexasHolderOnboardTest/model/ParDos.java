@@ -1,5 +1,6 @@
 package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,20 +12,23 @@ import java.util.Comparator;
 public class ParDos {
 
     Logger logger = Logger.getLogger(Card.class.getName());
-
+    @Autowired
+    Card card;
 
     public ManoGanadora doblePar(String hand1, String hand2 ){
         ManoGanadora manoGanadora = new ManoGanadora();
         String[] cartas = hand1.split(" ");
         String[] cartas2 = hand2.split(" ");
-        List<String> lista = Arrays.asList(cartas);
-        List<String> lista2 = Arrays.asList(cartas2);
+        List<String> arraylista = Arrays.asList(cartas);
+        List<String> arraylista2 = Arrays.asList(cartas2);
+        List<String> lista = new ArrayList<>(arraylista);
+        List<String> lista2 = new ArrayList<>(arraylista2);
         List<String> array = new ArrayList<>();
 
         int con=0;
         int con2=0;
-        boolean hayParDos=false;
-        boolean hayParDos2=false;
+        Boolean hayParDos=false;
+        Boolean hayParDos2=false;
 
         List<String> parDos= new ArrayList<>();
         List<String> parDos2= new ArrayList<>();
@@ -39,9 +43,11 @@ public class ParDos {
 ////////////////////////////////////////////////////////////mano1
 
         HashMap<String, Integer> mapCarta = elementosPar(lista);
-
+        int banValor=0;
         for (String i:mapCarta.keySet()) {
-            int banValor=mapCarta.get(i);
+            banValor=mapCarta.get(i);
+            logger.log(Level.INFO, "elemento: {0}", i);
+            logger.log(Level.INFO, "elemento: {0}", banValor);
 
             if (banValor==2){
                 con++;
@@ -50,9 +56,14 @@ public class ParDos {
             }
         }
 
+
+
         parDosOrdenada= ordenar(parDos);
         logger.log(Level.INFO, "elemento: {0}", parDosOrdenada);
         //Hay dos pares
+        if(con==1){
+            hayParDos=false;
+        }
         if (con==2){
             hayParDos=true;
             for (int i = 0; i < parDos.size() ; i++) {
@@ -85,6 +96,11 @@ public class ParDos {
 
         parDosOrdenada2= ordenar(parDos2);
         logger.log(Level.INFO, "elemento: {0}", parDosOrdenada);
+
+        if(con2==1){
+            hayParDos2=false;
+        }
+
         //Hay dos pares
         if (con2==2){
             hayParDos2=true;
@@ -102,11 +118,12 @@ public class ParDos {
 
         }
 
-        if (hayParDos==true && hayParDos2==true){
+        if (hayParDos.equals(Boolean.TRUE) && hayParDos2.equals(Boolean.TRUE)){
             HashMap cartasvalor = cartasValor();
             Integer numero1=0;
             Integer numero2=0;
-            for (int i = 0; i < cartasParDos.size(); i+=2) {
+            int bander=1;
+            for (int i = 0; i < cartasParDos.size()-1; i+=2) {
                 String ban1 = cartasParDos.get(i);
                 String valorCarta1 = ban1.substring(0, ban1.length() - 1);
                 String ban2 = cartasParDos2.get(i);
@@ -125,9 +142,66 @@ public class ParDos {
                     return manoGanadora;
 
                 }
+                if (numero2>numero1){
+                    manoGanadora.setWinnerHand(hand2);
+                    manoGanadora.setWinnerHandType("TwoPair");
+                    array.add(cartasParDos2.get(i));
+                    array.add(cartasParDos2.get(i+1));
+                    manoGanadora.setCompositionWinnerHand(array);
+                    return manoGanadora;
+                }
+                if ((numero1==numero2) && bander==2){
+                    desenpate1=desempate(cartasParDos,lista);
+                    desenpate2=desempate(cartasParDos2,lista2);
+
+                    String ban12 = desenpate1.get(0);
+                    String valorCarta12 = ban12.substring(0, ban1.length() - 1);
+                    String ban22 = desenpate2.get(0);
+                    String valorCarta22 = ban22.substring(0, ban1.length() - 1);
+
+
+                    numero1= (Integer) cartasvalor.get(valorCarta12);
+                    numero2= (Integer) cartasvalor.get(valorCarta22);
+                    if (numero1>numero2){
+                        manoGanadora.setWinnerHand(hand1);
+                        manoGanadora.setWinnerHandType("TwoPair");
+
+                        manoGanadora.setCompositionWinnerHand(desenpate1);
+                        return manoGanadora;
+
+                    }
+                    if (numero2>numero1){
+                        manoGanadora.setWinnerHand(hand2);
+                        manoGanadora.setWinnerHandType("TwoPair");
+
+                        manoGanadora.setCompositionWinnerHand(desenpate2);
+                        return manoGanadora;
+
+                    }
+
+                }
+                bander++;
             }
 
 
+        }
+        if ((hayParDos.equals(Boolean.TRUE) && hayParDos2.equals(Boolean.FALSE))){
+            manoGanadora.setWinnerHand(hand1);
+            manoGanadora.setWinnerHandType("TwoPair");
+
+            manoGanadora.setCompositionWinnerHand(cartasParDos);
+            return manoGanadora;
+        }
+        if ((hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.TRUE))){
+            manoGanadora.setWinnerHand(hand1);
+            manoGanadora.setWinnerHandType("TwoPair");
+
+            manoGanadora.setCompositionWinnerHand(cartasParDos);
+            return manoGanadora;
+        }
+        if ((hayParDos.equals(Boolean.FALSE) && hayParDos2.equals(Boolean.FALSE))){
+
+            return card.Par(hand1,hand2);
         }
 
 
@@ -208,7 +282,9 @@ public class ParDos {
     public List<String> desempate(List<String> manoPar,List<String> manoCompleta){
 
         for (int i = 0; i < manoPar.size(); i++) {
-            manoCompleta.remove(manoPar.get(i));
+            String prueba=manoPar.get(i);
+            manoCompleta.remove(prueba);
+            logger.log(Level.INFO, "elemento: {0}", manoCompleta);
 
         }
         return manoCompleta;

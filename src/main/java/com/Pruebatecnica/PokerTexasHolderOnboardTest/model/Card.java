@@ -3,6 +3,7 @@ package com.Pruebatecnica.PokerTexasHolderOnboardTest.model;
 
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,8 +21,15 @@ public class Card {
         List<String> haden2CartasPar2 = new ArrayList<>();
         List<String> array = new ArrayList<>();
         ManoGanadora manoGanadora = new ManoGanadora();
+        List<String> ordenada1 = new ArrayList<>();
+        List<String> ordenada2 = new ArrayList<>();
 
-
+        String[] cartas = hand1.split(" ");
+        List<String> arraylista = Arrays.asList(cartas);
+        List<String> lista = new ArrayList<>(arraylista);
+        String[] cartas2 = hand2.split(" ");
+        List<String> arraylista2 = Arrays.asList(cartas2);
+        List<String> lista2 = new ArrayList<>(arraylista2);
         int par1=0;
         int par2=0;
         boolean manoPar1 =false;
@@ -138,11 +146,46 @@ public class Card {
             manoGanadora.setWinnerHandType("OnePair");
             manoGanadora.setCompositionWinnerHand(haden1CartasPar2);
             return manoGanadora;
-        }else {
+        }else if((manoPar1 == false) && (manoPar2 == true)){
             manoGanadora.setWinnerHand(hand2);
             manoGanadora.setWinnerHandType("OnePair");
             manoGanadora.setCompositionWinnerHand(haden2CartasPar2);
             return manoGanadora;
+        }else {
+         ordenada1=ordenar(lista);
+         ordenada2=ordenar(lista2);
+
+            Integer numero1=0;
+            Integer numero2=0;
+            for (int i = 0; i < ordenada1.size(); i++) {
+
+                String ban1 = ordenada1.get(1);
+                String valorCarta1 = ban1.substring(0, ban1.length() - 1);
+                String ban2 = ordenada2.get(1);
+                String valorCarta2 = ban2.substring(0, ban2.length() - 1);
+
+
+                numero1= (Integer) cartasvalor.get(valorCarta1);
+                numero2= (Integer) cartasvalor.get(valorCarta2);
+
+                if (numero1>numero2){
+                    manoGanadora.setWinnerHand(hand1);
+                    manoGanadora.setWinnerHandType("HighCard");
+                    array.add(ordenada1.get(i));
+                    manoGanadora.setCompositionWinnerHand(array);
+                    return manoGanadora;
+                }
+                if (numero2>numero1){
+                    manoGanadora.setWinnerHand(hand2);
+                    manoGanadora.setWinnerHandType("HighCard");
+                    array.add(ordenada2.get(i));
+                    manoGanadora.setCompositionWinnerHand(array);
+                    return manoGanadora;
+                }
+
+            }
+
+
         }
 
 
@@ -213,6 +256,30 @@ public class Card {
 
         return hadenOrdenada;
 
+    }
+    public List<String> ordenar(List<String> desordenada) {
+        HashMap cartasvalor = cartasValor();
+        Integer numero1 = 0;
+        Integer numero2 = 0;
+        for (int i = 0; i < desordenada.size() - 1; i++) {
+            for (int j = 0; j < desordenada.size() - 1; j++) {
+                String ban1 = desordenada.get(j);
+                String valorCarta1 = ban1.substring(0, ban1.length() - 1);
+                String ban2 = desordenada.get(j+1);
+                String valorCarta2 = ban2.substring(0, ban2.length() - 1);
+
+                numero1 = (Integer) cartasvalor.get(valorCarta1);
+                numero2 = (Integer) cartasvalor.get(valorCarta2);
+                if (numero1 < numero2) {
+                    String aux = desordenada.get(j);
+                    desordenada.set(j, desordenada.get(j + 1));
+                    desordenada.set(j + 1, aux);
+                }
+
+
+            }
+        }
+        return desordenada;
     }
 
 
